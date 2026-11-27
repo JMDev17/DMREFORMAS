@@ -17,7 +17,25 @@
 <link rel="preload" as="font" type="font/woff2" href="fonts/archivo-normal-latin.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="fonts/manrope-normal-latin.woff2" crossorigin>
 
-<!-- PIXEL / TAG: colar aqui o Meta Pixel e/ou GTM -->
+<!-- Tag do Google: GA4 (G-EJCQSLD21S, propriedade "DM Reformas e Construção") + Google Ads (AW-11202235495).
+     A biblioteca carrega depois do "load" para não pesar no PageSpeed; os eventos ficam na fila do dataLayer até ela chegar. -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-EJCQSLD21S');
+gtag('config', 'AW-11202235495');
+window.GADS = {
+  form: 'AW-11202235495/AC2FCL_JxqYYEOeY0t0p',      // conversão "Formulário"
+  whatsapp: 'AW-11202235495/J9B1CITxy6YYEOeY0t0p'   // conversão "Botao WhatsApp"
+};
+addEventListener('load', function(){
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EJCQSLD21S';
+  document.head.appendChild(s);
+});
+</script>
+<!-- PIXEL: colar aqui o Meta Pixel quando houver -->
 
 <style>
 @font-face{font-family:'Archivo';font-style:normal;font-weight:500 800;font-display:swap;src:url(fonts/archivo-normal-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
@@ -773,7 +791,7 @@ const CONFIG = {
   const track = () => {
     try { window.fbq && fbq("track","Contact"); } catch(e){}
     try { window.gtag && gtag("event","generate_lead",{method:"whatsapp"}); } catch(e){}
-    try { window.dataLayer && dataLayer.push({event:"whatsapp_click"}); } catch(e){}
+    try { window.gtag && gtag("event","conversion",{send_to: GADS.whatsapp}); } catch(e){}
   };
   document.querySelectorAll(".js-wa").forEach(a=>{
     a.href = waUrl(a.dataset.msg || "Olá! Vim pelo site.");
@@ -816,7 +834,7 @@ const CONFIG = {
         f.classList.add("sent");
         try { window.fbq && fbq("track","Lead"); } catch(e){}
         try { window.gtag && gtag("event","generate_lead",{method:"form"}); } catch(e){}
-        try { window.dataLayer && dataLayer.push({event:"form_lead"}); } catch(e){}
+        try { window.gtag && gtag("event","conversion",{send_to: GADS.form}); } catch(e){}
       })
       .catch(()=>{
         b.disabled = false; b.innerHTML = bHtml;
